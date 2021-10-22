@@ -10,8 +10,9 @@ import java.util.List;
 public class Main {
 
     public static String fileDestination = "empty";
-    static List<List<String>> records = new ArrayList<>();
+    static List<List<String>> dataHolder = new ArrayList<>();
     public static String line = " ";
+    public static long lineCount = 0;
 
     public static void main(String[] args) throws FileNotFoundException {
         // taking the file destination from user
@@ -23,8 +24,10 @@ public class Main {
 
         }
         System.out.println("this works");
+        System.out.println(lineCount);
         readCSVFile(fileDestination);
-        printArrayListToConsole(records);
+        System.out.println(lineCount);
+        printArrayListToConsole(dataHolder);
         System.out.println("this works");
     }
 
@@ -36,10 +39,12 @@ public class Main {
             BufferedReader br = new BufferedReader(new FileReader(destination));
             // creating a while loop to continue when there is a next element to read
             while ((line = br.readLine()) != null) {
+                // taking the linecount to use after to print into a new file
+                lineCount++;
                 // splitting lines
                 String[] values = line.split(",");
                 // adding read elements to our array
-                records.add(Arrays.asList(values));
+                dataHolder.add(Arrays.asList(values));
             }
             // closing the bufferedReader to save space in memory
             br.close();
@@ -54,11 +59,16 @@ public class Main {
 
     // to print the arraylist to our console
     public static void printArrayListToConsole(List<List<String>> array) {
-        //using for each to iterate amongs all elements of our array.
+        // using for each to iterate amongs all elements of our array.
         for (List<String> list : array) {
 
             System.out.println(list);
 
         }
+    }
+
+    // to write our taked data to a new CSV file
+    public static void writeDataToCSV(String destination) {
+
     }
 }
