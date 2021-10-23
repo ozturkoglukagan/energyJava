@@ -1,11 +1,10 @@
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -13,6 +12,11 @@ public class Main {
     static List<List<String>> dataHolder = new ArrayList<>();
     public static String line = " ";
     public static long lineCount = 0;
+    public static long momentaryRowCount = 0;
+    public static long rowControlNumber = 0;
+    public static int insideDataCount = 0;
+    public static int borderDataCount = 0;
+    public static int emptyDataCount = 0;
 
     public static void main(String[] args) throws FileNotFoundException {
         // taking the file destination from user
@@ -24,9 +28,19 @@ public class Main {
 
         }
         System.out.println("this works");
-        System.out.println(lineCount);
+        System.out.println("line count;" + lineCount);
+        System.out.println("row count;" + rowControlNumber);
+        System.out.println("data count;" + insideDataCount);
+        System.out.println("emptydata;" + emptyDataCount);
+        long startTime = System.currentTimeMillis();
         readCSVFile(fileDestination);
-        System.out.println(lineCount);
+        long endTime = System.currentTimeMillis();
+        System.out.println("time elapsed ms:" + (endTime - startTime));
+        System.out.println("line count;" + lineCount);
+        System.out.println("row count;" + rowControlNumber);
+        System.out.println("data count;" + insideDataCount);
+        System.out.println("border data count;" + borderDataCount);
+        System.out.println("emptydata;" + emptyDataCount);
         printArrayListToConsole(dataHolder);
         System.out.println("this works");
     }
@@ -41,8 +55,32 @@ public class Main {
             while ((line = br.readLine()) != null) {
                 // taking the linecount to use after to print into a new file
                 lineCount++;
-                // splitting lines
+                // splitting data with commas 
                 String[] values = line.split(",");
+
+                // looking for missing data spots
+                for (String string : values) {
+                    // counting the rows
+                    momentaryRowCount++;
+                    // counting the data
+                    insideDataCount++;
+                    // putting an if statement to check if the data spot is empty
+                    if (string.equals("")) {
+                        emptyDataCount++;
+                    }
+                    
+
+                }
+                
+                // counting the rows and saving them in the rowControlNumber to see if there is any missing elements in our last column
+                if (momentaryRowCount>=rowControlNumber) { 
+                    rowControlNumber=momentaryRowCount; momentaryRowCount=0; 
+                //if the control number is smaller than the momentary row number, then there is a missing element in the last column of our dataset
+                }else if(momentaryRowCount<rowControlNumber){
+                    //finding the missing element number in our last column
+                    borderDataCount++;
+                }else{momentaryRowCount=0;}
+                 
                 // adding read elements to our array
                 dataHolder.add(Arrays.asList(values));
             }
