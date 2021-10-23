@@ -20,7 +20,7 @@ public class Main {
     public static int insideDataCount = 0;
     public static int borderDataCount = 0;
     public static int emptyDataCount = 0;
-    public static String[] missingDataPointer = new String[100];
+    public static String[] missingDataPointer = new String[1000];
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -29,36 +29,47 @@ public class Main {
 
         // checking if there has been a problem about taking the fileDestination
         if (fileDestination.equals("empty")) {
-            //printing and error message to our user
+            // printing and error message to our user
             System.out.println("File Destination unknown please try again.");
 
         }
 
-        System.out.println("this works");
+        /* System.out.println("this works"); */
         initArray(missingDataPointer);
-        System.out.println("line count;" + lineCount);
-        System.out.println("row count;" + rowControlNumber);
-        System.out.println("data count;" + insideDataCount);
-        System.out.println("emptydata;" + emptyDataCount);
-        long startTime = System.currentTimeMillis();
+        /*
+         * System.out.println("line count;" + lineCount);
+         * System.out.println("row count;" + rowControlNumber);
+         * System.out.println("data count;" + insideDataCount);
+         * System.out.println("emptydata;" + emptyDataCount);
+         */
+        /* long startTime = System.currentTimeMillis(); */
         readCSVFile(fileDestination);
-        long endTime = System.currentTimeMillis();
-        System.out.println("time elapsed ms:" + (endTime - startTime));
-        System.out.println("line count;" + lineCount);
-        System.out.println("row count;" + rowControlNumber);
-        System.out.println("data count;" + insideDataCount);
-        System.out.println("border data count;" + borderDataCount);
-        System.out.println("emptydata;" + emptyDataCount);
-        printArrayListToConsole(dataHolder);
-        System.out.println("------");
-    
-        for (String string : cleanupMissingDataPointer(missingDataPointer)) {
-
-            System.out.println(string);
-
-        }
-        printMissingDataToTXT(cleanupMissingDataPointer(missingDataPointer)); 
-        System.out.println("this works");
+        /*
+         * long endTime = System.currentTimeMillis();
+         * System.out.println("time elapsed ms:" + (endTime - startTime));
+         * System.out.println("line count;" + lineCount);
+         * System.out.println("row count;" + rowControlNumber);
+         * System.out.println("data count;" + insideDataCount);
+         * System.out.println("border data count;" + borderDataCount);
+         * System.out.println("emptydata;" + emptyDataCount);
+         */
+        
+        
+         /*printArrayListToConsole(dataHolder);*/
+        
+        
+        /*
+         * System.out.println("------");
+         * 
+         * for (String string : cleanupMissingDataPointer(missingDataPointer)) {
+         * 
+         * System.out.println(string);
+         * 
+         * }
+         */
+        printMissingDataToTXT(cleanupMissingDataPointer(missingDataPointer));
+        /* System.out.println("this works"); */
+        System.out.println("Success!");
     }
 
     // to read our file and parsing its values to an arraylist
@@ -111,7 +122,7 @@ public class Main {
 
                     // finding the missing element number in our last column
                     // saving the missing border spots' index
-                    missingDataPointer[missingDataIndex] = lineCount + "," + (momentaryRowCount+1);
+                    missingDataPointer[missingDataIndex] = lineCount + "," + (momentaryRowCount + 1);
                     borderDataCount++;
                     missingDataIndex++;
                     momentaryRowCount = 0;
@@ -205,19 +216,19 @@ public class Main {
         return array;
     }
 
-    //to print our cleaned array into a txt file
+    // to print our cleaned array into a txt file
     public static void printMissingDataToTXT(String[] array) {
-        //using try catch to create the output file if not exist
+        // using try catch to create the output file if not exist
         try {
-            FileWriter fw=new FileWriter(new File("output.txt"));
-            fw.write("The dataset has a total of "+array.length+" missing values.\n");
+            FileWriter fw = new FileWriter(new File("output.txt"));
+            fw.write("The dataset has a total of " + array.length + " missing values.\n");
             for (String string : array) {
-                String temp="Line "+string+". row.\n";
+                String temp = "Line " + string + ". row.\n";
                 fw.write(temp);
             }
             fw.close();
         } catch (IOException e) {
-            
+
             e.printStackTrace();
         }
 
