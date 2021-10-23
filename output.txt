@@ -1,0 +1,11 @@
+The dataset has 10 missing values.
+Line 3,3. row.
+Line 4,5. row.
+Line 5,5. row.
+Line 6,2. row.
+Line 6,3. row.
+Line 6,6. row.
+Line 8,6. row.
+Line 9,3. row.
+Line 10,4. row.
+Line 11,6. row.

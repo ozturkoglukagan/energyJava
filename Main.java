@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,13 +51,13 @@ public class Main {
         System.out.println("emptydata;" + emptyDataCount);
         printArrayListToConsole(dataHolder);
         System.out.println("------");
-
+    
         for (String string : cleanupMissingDataPointer(missingDataPointer)) {
 
             System.out.println(string);
 
         }
-
+        printMissingDataToTXT(cleanupMissingDataPointer(missingDataPointer)); 
         System.out.println("this works");
     }
 
@@ -164,7 +167,7 @@ public class Main {
                     if (notEmptyIndex == array.length - 1) {
 
                         // breaking all loops because notEmptyIndex is at max value; no need to continue
-                        // searchung
+                        // searching
                         break outer;
                     }
                     notEmptyIndex++;
@@ -202,8 +205,22 @@ public class Main {
         return array;
     }
 
+    //to print our cleaned array into a txt file
     public static void printMissingDataToTXT(String[] array) {
-        
+        //using try catch to create the output file if not exist
+        try {
+            FileWriter fw=new FileWriter(new File("output.txt"));
+            fw.write("The dataset has a total of "+array.length+" missing values.\n");
+            for (String string : array) {
+                String temp="Line "+string+". row.\n";
+                fw.write(temp);
+            }
+            fw.close();
+        } catch (IOException e) {
+            
+            e.printStackTrace();
+        }
+
     }
 
     // to write our taked data to a new CSV file
